@@ -1,0 +1,37 @@
+version: '3.9'  # Use the desired version of Docker Compose
+
+services:
+  db:
+    image: mysql:latest
+    container_name: course_database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: fchrgrib2310  # Set your desired root password here
+      MYSQL_DATABASE: course_select  # Set the name of the database you want to create
+      MYSQL_USER: fchrgrib  # Set the username for the database user
+      MYSQL_PASSWORD: fchrgrib2310  # Set the password for the database user
+    networks:
+      - mynet  # Connect the container to the "mynet" network
+
+  course_backend:
+    image: golang:latest
+    build: .
+    ports:
+      - 8080:8080
+    container_name: course_backend
+    restart: always
+    depends_on:
+      - db  # Ensure that the database container is started before the backend container
+    environment:
+      DB_HOST: course_database  # Use the service name (container name) to connect to the MySQL database
+      DB_PORT: 3306  # Set the port number for MySQL (default is 3306)
+      DB_USER: fchrgrib  # Set the same database username you used for the MySQL container
+      DB_PASSWORD: fchrgrib2310  # Set the same database password you used for the MySQL container
+      DB_NAME: course_select  # Set the same database name you used for the MySQL container
+    networks:
+      - mynet  # Connect the container to the "mynet" network
+    # Add other configuration for your Golang backend container as needed, e.g., volumes, ports, etc.
+
+networks:
+  mynet:  # Create the "mynet" network
+    driver: bridge  # You can use "bridge" or another supported network driver

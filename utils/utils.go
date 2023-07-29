@@ -2,11 +2,11 @@ package utils
 
 import "docker_training.com/models"
 
-func MaxScoreSKS(courses []models.Course, creditsTotal int) (float32, []models.Course) {
+func MaxScoreSKS(courses []models.CourseDB, creditsTotal int) (float32, []models.CourseDB) {
 	lenCourses := len(courses)
 
 	if lenCourses == 0 || creditsTotal == 0 {
-		return 0, []models.Course{}
+		return 0, []models.CourseDB{}
 	}
 
 	dp := make([][]float32, lenCourses+1)
@@ -28,7 +28,7 @@ func MaxScoreSKS(courses []models.Course, creditsTotal int) (float32, []models.C
 
 	res := dp[lenCourses][creditsTotal]
 	w := creditsTotal
-	listMaxCourse := make([]models.Course, 0)
+	listMaxCourse := make([]models.CourseDB, 0)
 
 	for i := lenCourses; i > 0 && res > 0; i-- {
 		if res == dp[i-1][w] {

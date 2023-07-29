@@ -69,7 +69,7 @@ func AddOneCourse(c *gin.Context) {
 		})
 		return
 	}
-	if _, err := _db.Exec("INSERT INTO course(id, course_name, credit_total, semester, major, expectation, department_id) VALUES(?,?,?,?,?,?,?)", course.Id, course.Name, course.CreditTotal, course.Semester, course.Major, course.Expectation, departmentId); err != nil {
+	if _, err := _db.Exec("INSERT INTO course(id, course_name, credit_total, semester, major_name, expectation, department_id) VALUES(?,?,?,?,?,?,?)", course.Id, course.Name, course.CreditTotal, course.Semester, course.Major, course.Expectation, departmentId); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": err,
 		})
@@ -102,7 +102,7 @@ func AddMultipleCourse(c *gin.Context) {
 			})
 			return
 		}
-		if _, err := _db.Exec("INSERT INTO course(id, course_name, credit_total, semester, major, expectation, department_id) VALUES(?,?,?,?,?,?,?)", course.Id, course.Name, course.CreditTotal, course.Semester, course.Major, course.Expectation, departmentId); err != nil {
+		if _, err := _db.Exec("INSERT INTO course(id, course_name, credit_total, semester, major_name, expectation, department_id) VALUES(?,?,?,?,?,?,?)", course.Id, course.Name, course.CreditTotal, course.Semester, course.Major, course.Expectation, departmentId); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"status": err,
 			})

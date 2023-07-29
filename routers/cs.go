@@ -5,6 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CSRouters(router *gin.Engine)  {
-	router.GET("/course_select",cs.CourseSelectController)
+func CSRouters(router *gin.Engine) {
+	router.POST("/course_select", cs.CourseSelectController)
 }

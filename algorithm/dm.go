@@ -5,7 +5,7 @@ import (
 	"docker_training.com/utils"
 )
 
-func MaximumCourses(course []models.Course, maximumCredits int, minimumCredits int) (int, []models.Course) {
+func MaximumCourses(course []models.CourseDB, maximumCredits int, minimumCredits int) (int, []models.CourseDB) {
 	if maximumCredits == minimumCredits {
 		maximum, listCourse := utils.MaxScoreSKS(course, minimumCredits)
 		return int(maximum), listCourse

@@ -11,13 +11,13 @@ import (
 func GetCourse(c *gin.Context) {
 	_db := db.Connect()
 
-	var course []models.Course
+	var course []models.CourseDB
 
 	row, err := _db.Query("SELECT * FROM course")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"course": course,
-			"status": err,
+			"status": err.Error(),
 		})
 		return
 	}
@@ -25,18 +25,18 @@ func GetCourse(c *gin.Context) {
 		if err := row.Close(); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"course": course,
-				"status": err,
+				"status": err.Error(),
 			})
 			return
 		}
 	}(row)
 
 	for row.Next() {
-		var each models.Course
-		if err := row.Scan(&each.Id, &each.Name, &each.CreditTotal, &each.Semester, &each.Major, &each.Expectation); err != nil {
+		var each models.CourseDB
+		if err := row.Scan(&each.Id, &each.Name, &each.CreditTotal, &each.Semester, &each.Major, &each.Expectation, &each.DepartmentID); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"course": []models.Course{},
-				"status": err,
+				"course": []models.CourseDB{},
+				"status": err.Error(),
 			})
 			return
 		}
@@ -57,7 +57,7 @@ func AddOneCourse(c *gin.Context) {
 
 	if err := c.ShouldBind(&course); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": err,
+			"status": err.Error(),
 		})
 		return
 	}
@@ -65,13 +65,13 @@ func AddOneCourse(c *gin.Context) {
 	var departmentId string
 	if err := _db.QueryRow("SELECT department_id FROM major WHERE major_name = ?", course.Major).Scan(&departmentId); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": err,
+			"status": err.Error(),
 		})
 		return
 	}
 	if _, err := _db.Exec("INSERT INTO course(id, course_name, credit_total, semester, major_name, expectation, department_id) VALUES(?,?,?,?,?,?,?)", course.Id, course.Name, course.CreditTotal, course.Semester, course.Major, course.Expectation, departmentId); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": err,
+			"status": err.Error(),
 		})
 		return
 	}

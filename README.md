@@ -16,6 +16,14 @@ Dynamic programming is a computational technique used to solve problems by break
 ## Algorithm Analysis
 i compare the value from the bottom to the top to get the maximum score with algorithm below i use dynamic programming with the maximum score of minimum credits first and compare with minimum credits+1 until maximum credits to get the maximum of maximum score.
 
+## How to Run Program
+- ensure you have docker desktop in your device
+- run docker desktop
+- pull the project in this link https://github.com/fchrgrib/CourseSchedulerBackend.git
+- open the project with your IDE or command prompt and make a command `docker compose build`
+- after that you can run the project with command `docker compose up -d` in terminal
+- you can see the program in http://localhost:8080
+
 ```go
 func MaximumCourses(course []models.CourseDB, maximumCredits int, minimumCredits int) (int, []models.CourseDB) {
 	if maximumCredits == minimumCredits {
